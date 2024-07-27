@@ -1,4 +1,4 @@
-from keepice_lakehouse_library import compute
+from keepice_lakehouse import compute
 
 
 def test_compute():
