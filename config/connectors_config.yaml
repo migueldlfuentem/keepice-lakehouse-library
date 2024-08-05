@@ -10,11 +10,16 @@ connectors:
       spark.sql.catalog.my_catalog.type: "hadoop"
       spark.sql.catalog.my_catalog.warehouse: "s3://my-warehouse/"
       spark.sql.catalog.my_catalog.uri: "http://localhost:8080"
+    catalog_name: "demo"
   athena:
     region_name: "us-west-2"
     s3_staging_dir: "s3://my-athena-query-results/"
     workgroup: "primary"
-  pyiceberg:
     catalog_name: "my_catalog"
+  pyiceberg:
+    catalog_name: "default"
     warehouse: "s3://my-warehouse/"
     uri: "http://localhost:8080"
+    catalog:
+      default:
+        type: glue

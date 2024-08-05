@@ -18,13 +18,13 @@ class IcebergManager:
         list_databases_query = """
             SHOW DATABASES;
         """
-        df = self.connector.query(query=list_databases_query)
-        return df
+        results = self.connector.query(query=list_databases_query)
+        return results
 
     def list_tables(self, database_name: str) -> List[str]:
         list_tables_query = f"SHOW TABLES IN {database_name};"
-        df = self.connector.query(query=list_tables_query)
-        return df
+        results = self.connector.query(query=list_tables_query)
+        return results
 
     def create_database(self, database_name: str):
         try:
@@ -33,20 +33,14 @@ class IcebergManager:
         except Exception as e:
             raise DatabaseCreationError(str(e)) from e
 
-    def check_if_database_exist(self, database_name: str) -> bool:
-        database_list = self.list_databases()
-        return database_name in database_list
-
-    def check_if_table_exist(self, database_name: str, table_name: str) -> bool:
-        table_list = self.list_tables(database_name=database_name)
-        return table_name in table_list
-
-    def get_table_ddl(self, database_name: str, table_name: str) -> str:
+    def get_table_ddl(self, database_name: str, table_name: str):
         get_ddl_query = f"SHOW CREATE TABLE {self.connector.catalog_name}.{database_name}.{table_name};"
-        df = self.connector.query(query=get_ddl_query)
-        return df
+        results = self.connector.query(query=get_ddl_query)
+        return results
 
-    def create_table(self, database_name: str, table_name: str, columns: dict, s3_folder_location: str, partition_column: Optional[str]):
+    def create_table(
+        self, database_name: str, table_name: str, columns: dict, s3_folder_location: str, partition_column: Optional[str] = None
+    ):
         """
         database_name: data base name where table will be created
         table_name: name of the table
@@ -95,6 +89,50 @@ class IcebergManager:
             return self.connector.query(query=get_property_query)
         except Exception as e:
             raise MetadataRetrievalError(str(e)) from e
+
+    def insert_bulk_table_data(self, source_table, database_name: str, table_name: str):
+        truncate_table_query = f"""DELETE FROM {self.connector.catalog_name}.{database_name}.{table_name};"""
+
+        insert_table_query = f"""
+            INSERT INTO {self.connector.catalog_name}.{database_name}.{table_name}
+            SELECT * FROM {source_table}
+            """
+
+        self.connector.query(truncate_table_query)
+        self.connector.query(insert_table_query)
+
+    def insert_incremental_table_data(self, source_table, database_name: str, table_name: str):
+        insert_table_query = f"""
+            INSERT INTO {self.connector.catalog_name}.{database_name}.{table_name}
+            SELECT * FROM {source_table}
+            """
+
+        self.connector.query(insert_table_query)
+
+    def upsert_delta_table_data(
+        self, source_table, database_name: str, table_name: str, primary_key: str, order_col: str, source_table_pk=None
+    ):
+        if source_table_pk is None or source_table_pk == "":
+            source_table_pk = primary_key
+
+        merge_delta_query = f"""MERGE INTO {self.connector.catalog_name}.{database_name}.{table_name} AS iceberg_table
+                USING (
+                    SELECT *
+                        FROM (
+                            SELECT
+                                *,
+                                ROW_NUMBER() OVER (PARTITION BY {primary_key} ORDER BY {order_col} DESC ) AS row_rank
+                            FROM
+                                {source_table}
+                        )
+                    WHERE row_rank = 1
+                ) AS temp_table
+                ON iceberg_table.{primary_key} = temp_table.{source_table_pk}
+                WHEN MATCHED AND avro_table.__action = 'd' THEN DELETE
+                WHEN MATCHED AND avro_table.__action = 'u' THEN UPDATE SET *
+                WHEN NOT MATCHED AND avro_table.__action != 'd' THEN INSERT *"""
+
+        self.connector.query(merge_delta_query)
 
     def close(self):
         if hasattr(self.connection, "stop"):

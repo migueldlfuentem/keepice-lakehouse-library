@@ -8,13 +8,14 @@ class SparkIcebergConfigModel(BaseModel):
     app_name: str
     master: str
     config: Dict[str, str]
+    catalog_name: Optional[str] = None
 
 
 class AthenaConfigModel(BaseModel):
     region_name: str
     s3_staging_dir: str
     workgroup: str
-    iceberg_catalog: Optional[str] = None
+    catalog_name: Optional[str] = None
     warehouse: Optional[str] = None
 
 

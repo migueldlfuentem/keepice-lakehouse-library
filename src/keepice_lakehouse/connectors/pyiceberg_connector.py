@@ -15,7 +15,7 @@ class PyIcebergConnector(BaseConnector):
         return self.__catalog_name
 
     def connect(self):
-        self.catalog = load_catalog(catalog_name=self.catalog_name, uri=self.uri, warehouse=self.warehouse)
+        self.catalog = load_catalog(catalog_name=self.catalog_name, uri=self.uri)
         return self.catalog
 
     def query(self, query: str):
