@@ -19,4 +19,9 @@ include CONTRIBUTING.rst
 include LICENSE
 include README.rst
 
-global-exclude *.py[cod] __pycache__/* *.so *.dylib
+include requirements.txt
+include test_requirements.txt
+include test_script.py
+recursive-include config *.yaml
+
+global-exclude *.py[cod] __pycache__/* *.so *.dylib *.ipynb
