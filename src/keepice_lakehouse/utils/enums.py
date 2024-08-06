@@ -12,6 +12,7 @@ class ConnectorType(Enum):
         ATHENA (str): Represents an Athena connector.
         PYICEBERG (str): Represents a PyIceberg connector.
     """
+
     SPARK_ICEBERG = "spark_iceberg"
     ATHENA = "athena"
     PYICEBERG = "pyiceberg"

@@ -23,9 +23,9 @@ def find_config_folder(start_path=None):
         start_path = Path(__file__).resolve().parent
     else:
         start_path = Path(start_path).resolve()
-    
+
     print(start_path)
-    
+
     for parent in start_path.parents:
         config_path = parent / "config"
         print(config_path)

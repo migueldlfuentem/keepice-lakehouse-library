@@ -1,6 +1,13 @@
-from typing import List, Optional
+from typing import List
+from typing import Optional
+
 from ..connectors.base_connector import BaseConnector
-from ..exceptions.exceptions import DatabaseCreationError, InvalidTablePropertyError, MetadataRetrievalError, TableCreationError, TableDropError
+from ..exceptions.exceptions import DatabaseCreationError
+from ..exceptions.exceptions import InvalidTablePropertyError
+from ..exceptions.exceptions import MetadataRetrievalError
+from ..exceptions.exceptions import TableCreationError
+from ..exceptions.exceptions import TableDropError
+
 
 class IcebergManager:
     """

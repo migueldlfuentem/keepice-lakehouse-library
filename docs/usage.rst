@@ -59,7 +59,7 @@ Here's a step-by-step guide on how to use the keepice-lakehouse library to creat
     # Get a Spark Iceberg manager
     spark_manager = factory.get_manager('spark_iceberg')
     athena_manager = factory.get_manager('athena')
-    
+
     # Create a database
     spark_manager.create_database(database_name='test')
 
@@ -100,7 +100,7 @@ Here's a step-by-step guide on how to use the keepice-lakehouse library to creat
 
     # List tables in a database
     print(spark_manager.list_tables(database_name='test').show())
-    
+
     # Get table DDL
     df = spark_manager.get_table_ddl(database_name='test', table_name='taxi_test_table')
     ddl = df.select('createtab_stmt').rdd.flatMap(lambda x: x).collect()[0]
@@ -117,11 +117,11 @@ Here's a step-by-step guide on how to use the keepice-lakehouse library to creat
         df = spark.read.parquet(f"/home/iceberg/data/{filename}")
         df.createOrReplaceTempView("temporal_table")
         spark_manager.insert_incremental_table_data(
-            source_table="temporal_table", 
-            database_name="test", 
+            source_table="temporal_table",
+            database_name="test",
             table_name="taxi_test_table"
         )
-    
+
     # Insert bulk data into a table
     for filename in [
         "yellow_tripdata_2021-04.parquet",
@@ -130,8 +130,8 @@ Here's a step-by-step guide on how to use the keepice-lakehouse library to creat
         df = spark.read.parquet(f"/home/iceberg/data/{filename}")
         df.createOrReplaceTempView("temporal_table")
         spark_manager.insert_bulk_table_data(
-            source_table="temporal_table", 
-            database_name="test", 
+            source_table="temporal_table",
+            database_name="test",
             table_name="taxi_test_table"
         )
 
@@ -314,6 +314,3 @@ Additional Notes
 - **Docker Image Information**
 
   For more details on the Docker image used, visit the [Tabulario Spark-Iceberg Docker Hub page](https://hub.docker.com/r/tabulario/spark-iceberg).
-
-
-

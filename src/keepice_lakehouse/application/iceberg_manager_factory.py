@@ -1,11 +1,14 @@
 from pathlib import Path
+
 import yaml
 from pydantic import ValidationError
+
 from ..containers.containers import ConnectorsContainer
 from ..containers.wiring import create_iceberg_manager
 from ..models.models import ConfigModel
 from ..utils.enums import ConnectorType
 from ..utils.utils import find_config_folder
+
 
 class IcebergManagerFactory:
     """
@@ -17,7 +20,7 @@ class IcebergManagerFactory:
     Attributes:
         container (ConnectorsContainer): The container used for managing dependencies and configurations.
     """
-    
+
     def __init__(self):
         """
         Initializes the IcebergManagerFactory instance.
@@ -33,7 +36,7 @@ class IcebergManagerFactory:
 
         The method finds the configuration folder, loads the configuration from the
         "connectors_config.yaml" file, and initializes the container with these settings.
-        
+
         Raises:
             ValueError: If the configuration is invalid or cannot be loaded.
         """

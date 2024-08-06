@@ -33,7 +33,6 @@ class BaseConnector:
 
         This method must be implemented by subclasses to establish a connection to a data source.
         """
-        pass
 
     @abstractmethod
     def query(self, query: str):
@@ -45,4 +44,3 @@ class BaseConnector:
         Args:
             query (str): The query to be executed.
         """
-        pass
