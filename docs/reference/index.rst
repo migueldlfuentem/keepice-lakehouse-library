@@ -4,4 +4,4 @@ Reference
 .. toctree::
     :glob:
 
-    keepice_lakehouse_library*
+    keepice_lakehouse*

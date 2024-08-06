@@ -23,5 +23,6 @@ include requirements.txt
 include test_requirements.txt
 include test_script.py
 recursive-include config *.yaml
+recursive-include docs *.rst
 
 global-exclude *.py[cod] __pycache__/* *.so *.dylib *.ipynb

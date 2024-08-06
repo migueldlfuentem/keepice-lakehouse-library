@@ -49,7 +49,7 @@ Overview
 
 .. end-badges
 
-A library designed to facilitate interaction with Apache Iceberg, abstracting its complexity for end users.
+The keepice-lakehouse library provides a flexible and powerful way to manage Iceberg tables using different backends such as Spark and Athena.
 
 * Free software: Apache Software License 2.0
 
@@ -78,20 +78,3 @@ Development
 To run all the tests run::
 
     tox
-
-Note, to combine the coverage data from all the tox environments run:
-
-.. list-table::
-    :widths: 10 90
-    :stub-columns: 1
-
-    - - Windows
-      - ::
-
-            set PYTEST_ADDOPTS=--cov-append
-            tox
-
-    - - Other
-      - ::
-
-            PYTEST_ADDOPTS=--cov-append tox

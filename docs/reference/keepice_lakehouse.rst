@@ -1,11 +1,12 @@
-keepice_lakehouse_library
+keepice_lakehouse
 =========================
 
 .. testsetup::
 
-    from keepice_lakehouse_library import *
+    from ..keepice_lakehouse import *
 
-.. automodule:: keepice_lakehouse_library
+.. automodule:: keepice_lakehouse
     :members:
     :undoc-members:
     :special-members: __init__, __len__
+    :show-inheritance:
