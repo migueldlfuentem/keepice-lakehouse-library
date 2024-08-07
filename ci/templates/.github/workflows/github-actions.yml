@@ -54,26 +54,9 @@ jobs:
         TOXPYTHON: ${{ matrix.toxpython }}
       run: |
         tox -e ${{ matrix.tox_env }} -v
-  report:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: install dependencies
-        run: |
-          python -m pip install --progress-bar=off -r requirements.txt
-          python -m pip install coverage
-      - name: combine coverage data
-        run: coverage combine
-      - name: generate coverage report
-        run: tox -e report
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4.0.1
-        with:
+    - name: Upload coverage reports to Codecov
+      if: matrix.tox_env != 'check'
+      uses: codecov/codecov-action@v4.0.1
+      with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
