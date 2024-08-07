@@ -1,0 +1,20 @@
+coverage:
+  # Minimum required coverage percentages
+  status:
+    project:
+      threshold: 80%  # Project-wide coverage threshold
+    patch:
+      threshold: 90%  # Coverage threshold for the patch or changes
+    diff:
+      threshold: 80%  # Coverage threshold for changes (diff) coverage
+
+# Optional: set thresholds for specific files or directories
+paths:
+  # Define thresholds for specific paths
+  - path: "src/"
+    threshold: 90%
+  - path: "tests/"
+    threshold: 90%
+
+# Optional: fail the build if coverage is below the threshold
+fail_ci_if_error: true
