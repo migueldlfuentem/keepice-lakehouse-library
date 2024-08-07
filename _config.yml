@@ -1,0 +1,13 @@
+title: Keepice Lakehouse
+description: The keepice-lakehouse library provides a flexible and powerful way to manage Iceberg tables using different backends such as Spark and Athena. This guide will help you understand how to use the library effectively.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://migueldlfuentm.github.io" # the base hostname & protocol for your site
+theme: minima
+
+# Other configurations
+
+plugins:
+  - jekyll-feed
+
+# Build settings
+markdown: kramdown
