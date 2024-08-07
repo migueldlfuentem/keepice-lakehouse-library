@@ -64,14 +64,6 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:
-      - name: install dependencies
-        run: |
-          python -mpip install --progress-bar=off -r ci/requirements.txt
-          python -m pip install coverage
-          virtualenv --version
-          pip --version
-          tox --version
-          pip list --format=freeze
       - name: generate coverage report
         run: tox -e report
       - name: Upload coverage reports to Codecov
