@@ -1,20 +1,23 @@
+comment:
+  behavior: default
+
 coverage:
-  # Minimum required coverage percentages
+  precision: 2
   status:
     project:
-      threshold: 80%  # Project-wide coverage threshold
-    patch:
-      threshold: 90%  # Coverage threshold for the patch or changes
-    diff:
-      threshold: 80%  # Coverage threshold for changes (diff) coverage
+      default:
+        # basic
+        target: 95% #default
+        threshold: 5
+        base: auto
+        flags:
+          - unit
+        paths:
+          - "src"
+       # advanced settings
+        if_ci_failed: error #success, failure, error, ignore
+        informational: false
+        only_pulls: false
 
-# Optional: set thresholds for specific files or directories
-paths:
-  # Define thresholds for specific paths
-  - path: "src/"
-    threshold: 95%
-  - path: "tests/"
-    threshold: 95%
-
-# Optional: fail the build if coverage is below the threshold
-fail_ci_if_error: true
+github_checks:
+  annotations: true
