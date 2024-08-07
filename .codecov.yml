@@ -12,9 +12,9 @@ coverage:
 paths:
   # Define thresholds for specific paths
   - path: "src/"
-    threshold: 90%
+    threshold: 95%
   - path: "tests/"
-    threshold: 90%
+    threshold: 95%
 
 # Optional: fail the build if coverage is below the threshold
 fail_ci_if_error: true
