@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Usage &mdash; keepice-lakehouse-library 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d10597a4" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=7026087e"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Reference" href="reference/index.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            keepice-lakehouse-library
+          </a>
+              <div class="version">
+                0.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#connection-setup">Connection Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-of-use">Example of use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#summary-of-code-functionality">Summary of Code Functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing-keepice-lakehouse-locally-with-spark">Testing <cite>keepice_lakehouse</cite> Locally with Spark</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-with-docker-compose">Setting Up with Docker-Compose</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-spark-commands">Running Spark Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#additional-notes">Additional Notes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">keepice-lakehouse-library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Usage</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/usage.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The keepice-lakehouse library provides a flexible and powerful way to manage Iceberg tables using different backends such as Spark and Athena. This guide will help you understand how to use the library effectively.</p>
+</section>
+<section id="connection-setup">
+<h2>Connection Setup<a class="headerlink" href="#connection-setup" title="Link to this heading"></a></h2>
+<p>To use the <code class="docutils literal notranslate"><span class="pre">keepice_lakehouse_library</span></code> effectively, it is crucial to set up a <cite>connectors_config.yaml</cite> file within your project. This file should be placed in a folder named <cite>config</cite> within your project directory. The <cite>connectors_config.yaml</cite> file defines the configuration settings for different Iceberg managers and ensures that the library connects to the appropriate backends with the correct parameters.</p>
+<p>The <cite>connectors_config.yaml</cite> file should be located at:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&lt;project_root&gt;/
+└── config/
+    └── connectors_config.yaml
+</pre></div>
+</div>
+<p>Here is an example of a <cite>connectors_config.yaml</cite> file:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">connectors</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">spark_iceberg</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">app_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;MySparkIcebergApp&quot;</span>
+<span class="w">    </span><span class="nt">master</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;local[*]&quot;</span>
+<span class="w">    </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">spark.executor.memory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2g&quot;</span>
+<span class="w">      </span><span class="nt">spark.driver.memory</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1g&quot;</span>
+<span class="w">      </span><span class="nt">spark.executor.cores</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2&quot;</span>
+<span class="w">      </span><span class="nt">spark.sql.catalog.my_catalog</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;org.apache.iceberg.spark.SparkCatalog&quot;</span>
+<span class="w">      </span><span class="nt">spark.sql.catalog.my_catalog.type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;hadoop&quot;</span>
+<span class="w">      </span><span class="nt">spark.sql.catalog.my_catalog.warehouse</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;s3://my-warehouse/&quot;</span>
+<span class="w">      </span><span class="nt">spark.sql.catalog.my_catalog.uri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://localhost:8080&quot;</span>
+<span class="w">    </span><span class="nt">catalog_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;demo&quot;</span>
+<span class="w">  </span><span class="nt">athena</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">region_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;us-west-2&quot;</span>
+<span class="w">    </span><span class="nt">s3_staging_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;s3://my-athena-query-results/&quot;</span>
+<span class="w">    </span><span class="nt">workgroup</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;primary&quot;</span>
+<span class="w">    </span><span class="nt">catalog_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_catalog&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="example-of-use">
+<h2>Example of use<a class="headerlink" href="#example-of-use" title="Link to this heading"></a></h2>
+<p>Here’s a step-by-step guide on how to use the keepice-lakehouse library to create and manage Iceberg tables.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">keepice_lakehouse_library</span>
+
+<span class="c1"># Create an instance of IcebergManagerFactory</span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">IcebergManagerFactory</span><span class="p">()</span>
+
+<span class="c1"># Get a Spark Iceberg manager</span>
+<span class="n">spark_manager</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">get_manager</span><span class="p">(</span><span class="s1">&#39;spark_iceberg&#39;</span><span class="p">)</span>
+<span class="n">athena_manager</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">get_manager</span><span class="p">(</span><span class="s1">&#39;athena&#39;</span><span class="p">)</span>
+
+<span class="c1"># Create a database</span>
+<span class="n">spark_manager</span><span class="o">.</span><span class="n">create_database</span><span class="p">(</span><span class="n">database_name</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+
+<span class="c1"># Define schema for the table</span>
+<span class="n">schema_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;VendorID&quot;</span><span class="p">:</span> <span class="s2">&quot;bigint&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tpep_pickup_datetime&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tpep_dropoff_datetime&quot;</span><span class="p">:</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;passenger_count&quot;</span><span class="p">:</span> <span class="s2">&quot;double&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;trip_distance&quot;</span><span class="p">:</span> <span class="s2">&quot;double&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;RatecodeID&quot;</span><span class="p">:</span> <span class="s2">&quot;double&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;store_and_fwd_flag&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PULocationID&quot;</span><span class="p">:</span> <span class="s2">&quot;bigint&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;DOLocationID&quot;</span><span class="p">:</span> <span class="s2">&quot;bigint&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;payment_type&quot;</span><span class="p">:</span> <span class="s2">&quot;bigint&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;fare_amount&quot;</span><span class="p">:</span> <span class="s2">&quot;double&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;extra&quot;</span><span class="p">:</span> <span class="s2">&quot;double&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mta_tax&quot;</span><span class="p">:</span> <span class="s2">&quot;double&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tip_amount&quot;</span><span class="p">:</span> <span class="s2">&quot;double&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tolls_amount&quot;</span><span class="p">:</span> <span class="s2">&quot;double&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;improvement_surcharge&quot;</span><span class="p">:</span> <span class="s2">&quot;double&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;total_amount&quot;</span><span class="p">:</span> <span class="s2">&quot;double&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;congestion_surcharge&quot;</span><span class="p">:</span> <span class="s2">&quot;double&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;airport_fee&quot;</span><span class="p">:</span> <span class="s2">&quot;double&quot;</span>
+<span class="p">}</span>
+
+<span class="c1"># Create a table</span>
+<span class="n">spark_manager</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span>
+    <span class="n">database_name</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span>
+    <span class="n">table_name</span><span class="o">=</span><span class="s1">&#39;taxi_test_table&#39;</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">schema_dict</span><span class="p">,</span>
+    <span class="n">s3_folder_location</span><span class="o">=</span><span class="s2">&quot;s3://warehouse/test/taxi-test-table&quot;</span><span class="p">,</span>
+    <span class="n">partition_column</span><span class="o">=</span><span class="s2">&quot;days(tpep_pickup_datetime)&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># List databases</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spark_manager</span><span class="o">.</span><span class="n">list_databases</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">())</span>
+
+<span class="c1"># List tables in a database</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spark_manager</span><span class="o">.</span><span class="n">list_tables</span><span class="p">(</span><span class="n">database_name</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">())</span>
+
+<span class="c1"># Get table DDL</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">spark_manager</span><span class="o">.</span><span class="n">get_table_ddl</span><span class="p">(</span><span class="n">database_name</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">table_name</span><span class="o">=</span><span class="s1">&#39;taxi_test_table&#39;</span><span class="p">)</span>
+<span class="n">ddl</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;createtab_stmt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">flatMap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ddl</span><span class="p">)</span>
+
+<span class="c1"># Insert incremental data into a table</span>
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="p">[</span>
+    <span class="s2">&quot;yellow_tripdata_2022-04.parquet&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;yellow_tripdata_2022-03.parquet&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;yellow_tripdata_2022-02.parquet&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;yellow_tripdata_2022-01.parquet&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;yellow_tripdata_2021-12.parquet&quot;</span><span class="p">,</span>
+<span class="p">]:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/home/iceberg/data/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s2">&quot;temporal_table&quot;</span><span class="p">)</span>
+    <span class="n">spark_manager</span><span class="o">.</span><span class="n">insert_incremental_table_data</span><span class="p">(</span>
+        <span class="n">source_table</span><span class="o">=</span><span class="s2">&quot;temporal_table&quot;</span><span class="p">,</span>
+        <span class="n">database_name</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span>
+        <span class="n">table_name</span><span class="o">=</span><span class="s2">&quot;taxi_test_table&quot;</span>
+    <span class="p">)</span>
+
+<span class="c1"># Insert bulk data into a table</span>
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="p">[</span>
+    <span class="s2">&quot;yellow_tripdata_2021-04.parquet&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;yellow_tripdata_2021-07.parquet&quot;</span>
+<span class="p">]:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/home/iceberg/data/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s2">&quot;temporal_table&quot;</span><span class="p">)</span>
+    <span class="n">spark_manager</span><span class="o">.</span><span class="n">insert_bulk_table_data</span><span class="p">(</span>
+        <span class="n">source_table</span><span class="o">=</span><span class="s2">&quot;temporal_table&quot;</span><span class="p">,</span>
+        <span class="n">database_name</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span>
+        <span class="n">table_name</span><span class="o">=</span><span class="s2">&quot;taxi_test_table&quot;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="summary-of-code-functionality">
+<h2>Summary of Code Functionality<a class="headerlink" href="#summary-of-code-functionality" title="Link to this heading"></a></h2>
+<p>The provided code utilizes the <code class="docutils literal notranslate"><span class="pre">keepice_lakehouse_library</span></code> to manage Iceberg tables using a Spark backend. Here’s a detailed breakdown of what the code does:</p>
+<ol class="arabic simple">
+<li><p><strong>Import Library and Create Factory Instance</strong>:
+- The code starts by importing the <code class="docutils literal notranslate"><span class="pre">keepice_lakehouse_library</span></code>.
+- It then creates an instance of <code class="docutils literal notranslate"><span class="pre">IcebergManagerFactory</span></code> to manage different types of Iceberg managers.</p></li>
+<li><p><strong>Get Spark and Athena Managers</strong>:
+- The factory is used to create a Spark Iceberg manager (<code class="docutils literal notranslate"><span class="pre">spark_manager</span></code>) and an Athena manager (<code class="docutils literal notranslate"><span class="pre">athena_manager</span></code>).</p></li>
+<li><p><strong>Create Database</strong>:
+- A new database named <code class="docutils literal notranslate"><span class="pre">test</span></code> is created using the Spark Iceberg manager.</p></li>
+<li><p><strong>Define Table Schema</strong>:
+- A schema for a table is defined in a dictionary (<code class="docutils literal notranslate"><span class="pre">schema_dict</span></code>). This schema includes columns like <code class="docutils literal notranslate"><span class="pre">VendorID</span></code>, <code class="docutils literal notranslate"><span class="pre">tpep_pickup_datetime</span></code>, <code class="docutils literal notranslate"><span class="pre">passenger_count</span></code>, etc., with their corresponding data types.</p></li>
+<li><p><strong>Create Table</strong>:
+- A table named <code class="docutils literal notranslate"><span class="pre">taxi_test_table</span></code> is created in the <code class="docutils literal notranslate"><span class="pre">test</span></code> database using the previously defined schema. The table is stored at the specified S3 location and partitioned by the <code class="docutils literal notranslate"><span class="pre">tpep_pickup_datetime</span></code> column.</p></li>
+<li><p><strong>List Databases and Tables</strong>:
+- The code lists all databases managed by the Spark manager.
+- It also lists all tables within the <code class="docutils literal notranslate"><span class="pre">test</span></code> database.</p></li>
+<li><p><strong>Get Table DDL</strong>:
+- The Data Definition Language (DDL) statement for the <code class="docutils literal notranslate"><span class="pre">taxi_test_table</span></code> in the <code class="docutils literal notranslate"><span class="pre">test</span></code> database is retrieved and printed. This DDL includes the SQL statement used to create the table.</p></li>
+<li><p><strong>Insert Incremental Data</strong>:
+- The code reads multiple Parquet files (representing yellow taxi trip data) into Spark DataFrames.
+- For each DataFrame, a temporary table named <code class="docutils literal notranslate"><span class="pre">temporal_table</span></code> is created.
+- Incremental data from these temporary tables is inserted into the <code class="docutils literal notranslate"><span class="pre">taxi_test_table</span></code> in the <code class="docutils literal notranslate"><span class="pre">test</span></code> database.</p></li>
+<li><p><strong>Insert Bulk Data</strong>:
+- Similarly, the code reads additional Parquet files into Spark DataFrames.
+- Temporary tables are created for these DataFrames.
+- Bulk data from these temporary tables is inserted into the <code class="docutils literal notranslate"><span class="pre">taxi_test_table</span></code> in the <code class="docutils literal notranslate"><span class="pre">test</span></code> database.</p></li>
+</ol>
+<p>Overall, this code demonstrates how to use the <code class="docutils literal notranslate"><span class="pre">keepice_lakehouse_library</span></code> to create and manage Iceberg tables with Spark, including creating databases and tables, defining schemas, listing databases and tables, retrieving table DDL, and inserting both incremental and bulk data into tables.</p>
+</section>
+<section id="testing-keepice-lakehouse-locally-with-spark">
+<h2>Testing <cite>keepice_lakehouse</cite> Locally with Spark<a class="headerlink" href="#testing-keepice-lakehouse-locally-with-spark" title="Link to this heading"></a></h2>
+<p>This guide will help you set up a local Spark and Iceberg environment using Docker. This setup will allow you to test the <cite>keepice_lakehouse</cite> library and its integration with Spark.</p>
+<section id="setting-up-with-docker-compose">
+<h3>Setting Up with Docker-Compose<a class="headerlink" href="#setting-up-with-docker-compose" title="Link to this heading"></a></h3>
+<p>The quickest way to get started is by using a <cite>docker-compose</cite> file that sets up a local Spark cluster with an Iceberg catalog. Ensure you have Docker and Docker Compose installed on your machine.</p>
+<ol class="arabic">
+<li><p><strong>Create a `docker-compose.yml` File</strong></p>
+<p>Save the following YAML configuration into a file named <cite>docker-compose.yml</cite>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3&quot;</span>
+
+<span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">spark-iceberg</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tabulario/spark-iceberg</span>
+<span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">spark-iceberg</span>
+<span class="w">    </span><span class="nt">build</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">spark/</span>
+<span class="w">    </span><span class="nt">networks</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">iceberg_net</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rest</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./warehouse:/home/iceberg/warehouse</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./notebooks:/home/iceberg/notebooks/notebooks</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AWS_ACCESS_KEY_ID=admin</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AWS_SECRET_ACCESS_KEY=password</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AWS_REGION=us-east-1</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8888:8888</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080:8080</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10000:10000</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10001:10001</span>
+<span class="w">  </span><span class="nt">rest</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tabulario/iceberg-rest</span>
+<span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">iceberg-rest</span>
+<span class="w">    </span><span class="nt">networks</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">iceberg_net</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8181:8181</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AWS_ACCESS_KEY_ID=admin</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AWS_SECRET_ACCESS_KEY=password</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AWS_REGION=us-east-1</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CATALOG_WAREHOUSE=s3://warehouse/</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CATALOG_IO__IMPL=org.apache.iceberg.aws.s3.S3FileIO</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CATALOG_S3_ENDPOINT=http://minio:9000</span>
+<span class="w">  </span><span class="nt">minio</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio/minio</span>
+<span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MINIO_ROOT_USER=admin</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MINIO_ROOT_PASSWORD=password</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MINIO_DOMAIN=minio</span>
+<span class="w">    </span><span class="nt">networks</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">iceberg_net</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">aliases</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">warehouse.minio</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9001:9001</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9000:9000</span>
+<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;server&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;/data&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;--console-address&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;:9001&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">mc</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minio/mc</span>
+<span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mc</span>
+<span class="w">    </span><span class="nt">networks</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">iceberg_net</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AWS_ACCESS_KEY_ID=admin</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AWS_SECRET_ACCESS_KEY=password</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AWS_REGION=us-east-1</span>
+<span class="w">    </span><span class="nt">entrypoint</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
+<span class="w">      </span><span class="no">/bin/sh -c &quot;</span>
+<span class="w">      </span><span class="no">until (/usr/bin/mc config host add minio http://minio:9000 admin password) do echo &#39;...waiting...&#39; &amp;&amp; sleep 1; done;</span>
+<span class="w">      </span><span class="no">/usr/bin/mc rm -r --force minio/warehouse;</span>
+<span class="w">      </span><span class="no">/usr/bin/mc mb minio/warehouse;</span>
+<span class="w">      </span><span class="no">/usr/bin/mc policy set public minio/warehouse;</span>
+<span class="w">      </span><span class="no">tail -f /dev/null</span>
+<span class="w">      </span><span class="no">&quot;</span>
+<span class="nt">networks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">iceberg_net</span><span class="p">:</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Start the Docker Containers</strong></p>
+<p>Run the following command to start up the Docker containers:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker-compose<span class="w"> </span>up
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="running-spark-commands">
+<h3>Running Spark Commands<a class="headerlink" href="#running-spark-commands" title="Link to this heading"></a></h3>
+<p>Once the containers are up and running, you can start a Spark session using the following commands:</p>
+<ul>
+<li><p><strong>Spark SQL CLI</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>spark-iceberg<span class="w"> </span>spark-sql
+</pre></div>
+</div>
+</li>
+<li><p><strong>Spark Shell</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>spark-iceberg<span class="w"> </span>spark-shell
+</pre></div>
+</div>
+</li>
+<li><p><strong>PySpark</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>spark-iceberg<span class="w"> </span>pyspark
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="additional-notes">
+<h3>Additional Notes<a class="headerlink" href="#additional-notes" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong>Notebook Server</strong></p>
+<p>You can also launch a Jupyter notebook server to interact with Spark by running:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>spark-iceberg<span class="w"> </span>notebook
+</pre></div>
+</div>
+<p>The notebook server will be available at <cite>http://localhost:8888</cite>.</p>
+</li>
+<li><p><strong>Docker Image Information</strong></p>
+<p>For more details on the Docker image used, visit the [Tabulario Spark-Iceberg Docker Hub page](<a class="reference external" href="https://hub.docker.com/r/tabulario/spark-iceberg">https://hub.docker.com/r/tabulario/spark-iceberg</a>).</p>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="reference/index.html" class="btn btn-neutral float-right" title="Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Miguel de la Fuente.
+      <span class="lastupdated">Last updated on Aug 07, 2024.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
