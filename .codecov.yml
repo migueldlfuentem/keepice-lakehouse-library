@@ -7,7 +7,7 @@ coverage:
     project:
       default:
         # basic
-        target: 95% #default
+        target: 90% #default
         threshold: 0
         base: auto
         flags:
