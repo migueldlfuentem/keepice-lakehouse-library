@@ -76,8 +76,6 @@ jobs:
           pip --version
           tox --version
           pip list --format=freeze
-      - name: combine coverage data
-        run: coverage combine
       - name: generate coverage report
         run: tox -e report
       - name: Upload coverage reports to Codecov
