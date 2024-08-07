@@ -60,6 +60,7 @@ jobs:
       run: >
         tox -e ${{ matrix.tox_env }} -v
     - name: Upload coverage reports to Codecov
+      if: matrix.tox_env != 'check'
       uses: codecov/codecov-action@v4.0.1
       with:
           token: ${{ secrets.CODECOV_TOKEN }}
