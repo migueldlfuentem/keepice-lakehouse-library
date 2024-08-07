@@ -9,7 +9,7 @@ Why does this file exist, and why __main__? For more info, read:
 - https://docs.python.org/3/using/cmdline.html#cmdoption-m
 """
 
-from keepice_lakehouse_library.cli import run
+from .application.iceberg_manager_factory import IcebergManagerFactory
 
 if __name__ == "__main__":
-    run()
+    IcebergManagerFactory()

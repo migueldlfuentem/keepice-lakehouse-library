@@ -1,3 +1,5 @@
+prune docs/_build
+
 graft docs
 graft src
 graft ci
@@ -10,8 +12,11 @@ include .editorconfig
 include .github/workflows/github-actions.yml
 include .pre-commit-config.yaml
 include .readthedocs.yml
+include .codecov.yml
 include pytest.ini
 include tox.ini
+include setup.py
+include pyproject.toml
 
 include AUTHORS.rst
 include CHANGELOG.rst
@@ -19,4 +24,11 @@ include CONTRIBUTING.rst
 include LICENSE
 include README.rst
 
-global-exclude *.py[cod] __pycache__/* *.so *.dylib
+include requirements.txt
+include test_requirements.txt
+include test_script.py
+recursive-include config *.yaml
+recursive-include docs *.rst
+
+
+global-exclude *.py[cod] __pycache__/* *.so *.dylib *.ipynb

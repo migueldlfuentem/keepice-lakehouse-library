@@ -1,0 +1,7 @@
+pydantic
+dependency-injector
+pyspark
+pyyaml
+pyathena
+pyiceberg
+sqlalchemy

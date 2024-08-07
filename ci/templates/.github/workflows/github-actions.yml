@@ -2,8 +2,8 @@ name: build
 on: [push, pull_request, workflow_dispatch]
 jobs:
   test:
-    name: {{ '${{ matrix.name }}' }}
-    runs-on: {{ '${{ matrix.os }}' }}
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     strategy:
       fail-fast: false
@@ -14,43 +14,34 @@ jobs:
             toxpython: 'python3.11'
             tox_env: 'check'
             os: 'ubuntu-latest'
-          - name: 'docs'
-            python: '3.11'
-            toxpython: 'python3.11'
-            tox_env: 'docs'
-            os: 'ubuntu-latest'
-{% for env in tox_environments %}
-{% set prefix = env.split('-')[0] -%}
-{% if prefix.startswith('pypy') %}
-{% set python %}pypy-{{ prefix[4] }}.{{ prefix[5:] }}{% endset %}
-{% set cpython %}pp{{ prefix[4:5] }}{% endset %}
-{% set toxpython %}pypy{{ prefix[4] }}.{{ prefix[5:] }}{% endset %}
-{% else %}
-{% set python %}{{ prefix[2] }}.{{ prefix[3:] }}{% endset %}
-{% set cpython %}cp{{ prefix[2:] }}{% endset %}
-{% set toxpython %}python{{ prefix[2] }}.{{ prefix[3:] }}{% endset %}
-{% endif %}
-{% for os, python_arch in [
-    ['ubuntu', 'x64'],
-    ['windows', 'x64'],
-    ['macos', 'arm64'],
-] %}
-          - name: '{{ env }} ({{ os }})'
-            python: '{{ python }}'
-            toxpython: '{{ toxpython }}'
-            python_arch: '{{ python_arch }}'
-            tox_env: '{{ env }}'
-            os: '{{ os }}-latest'
-{% endfor %}
-{% endfor %}
+          {% for env in tox_environments %}
+            {% set prefix = env.split('-')[0] %}
+            {% if prefix.startswith('py') and not prefix.startswith('pypy') and not prefix.startswith('docs') %}
+              {% set python = prefix[2:] %}
+              {% set toxpython = 'python' + python %}
+              {% set os_arch = {
+                'ubuntu': 'x64',
+                'windows': 'x64',
+                'macos': 'arm64'
+              } %}
+              {% for os, arch in os_arch.items() %}
+                - name: '{{ env }} ({{ os }})'
+                  python: '{{ python }}'
+                  toxpython: '{{ toxpython }}'
+                  python_arch: '{{ arch }}'
+                  tox_env: '{{ env }}'
+                  os: '{{ os }}-latest'
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
     steps:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
     - uses: actions/setup-python@v5
       with:
-        python-version: {{ '${{ matrix.python }}' }}
-        architecture: {{ '${{ matrix.python_arch }}' }}
+        python-version: ${{ matrix.python }}
+        architecture: ${{ matrix.python_arch }}
     - name: install dependencies
       run: |
         python -mpip install --progress-bar=off -r ci/requirements.txt
@@ -60,14 +51,12 @@ jobs:
         pip list --format=freeze
     - name: test
       env:
-        TOXPYTHON: '{{ '${{ matrix.toxpython }}' }}'
-      run: >
-        tox -e {{ '${{ matrix.tox_env }}' }} -v
-  finish:
-    needs: test
-    if: {{ '${{ always() }}' }}
-    runs-on: ubuntu-latest
-    steps:
-    - uses: codecov/codecov-action@v3
+        TOXPYTHON: ${{ matrix.toxpython }}
+      run: |
+        tox -e ${{ matrix.tox_env }} -v
+    - name: Upload coverage reports to Codecov
+      if: matrix.tox_env != 'check'
+      uses: codecov/codecov-action@v4.0.1
       with:
-        CODECOV_TOKEN: {% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}
+          token: ${{ secrets.CODECOV_TOKEN }}
+
