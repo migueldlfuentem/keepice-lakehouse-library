@@ -2,7 +2,7 @@ name: documentation
 
 on:
   push:
-    branches: [main, 'feature/**']  # branch to trigger deployment
+    branches: [main]  # branch to trigger deployment
 
 jobs:
   pages:
