@@ -53,8 +53,8 @@ setup(
         "Topic :: Utilities",
     ],
     project_urls={
-        "Documentation": "https://keepice-lakehouse-library.readthedocs.io/",
-        "Changelog": "https://keepice-lakehouse-library.readthedocs.io/en/latest/changelog.html",
+        "Documentation": "https://migueldlfuentem.github.io/keepice-lakehouse-library",
+        "Changelog": "https://migueldlfuentem.github.io/keepice-lakehouse-libraryen/latest/changelog.html",
         "Issue Tracker": "https://github.com/migueldlfuentem/keepice-lakehouse-library/issues",
     },
     keywords=[
