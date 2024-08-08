@@ -2,7 +2,7 @@ name: documentation
 
 on:
   push:
-    branches: [main]  # branch to trigger deployment
+    branches: [main, 'feature/**']  # branch to trigger deployment
 
 jobs:
   pages:
@@ -25,7 +25,10 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
+        pip install -r requirements.txt
         pip install sphinx sphinx_rtd_theme myst_parser  # Install Sphinx and the ReadTheDocs theme
+        pip list
+        python -c "import sys; print(sys.path)"
 
     - name: Build Sphinx documentation
       run: |
@@ -34,5 +37,3 @@ jobs:
     - id: deployment
       name: Deploy to GitHub Pages
       uses: sphinx-notes/pages@v3
-      with:
-        publish_dir: _build  # The directory where Sphinx output is located
