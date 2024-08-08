@@ -27,8 +27,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install sphinx sphinx_rtd_theme myst_parser  # Install Sphinx and the ReadTheDocs theme
-        pip list
-        python -c "import sys; print(sys.path)"
 
     - name: Build Sphinx documentation
       run: |
