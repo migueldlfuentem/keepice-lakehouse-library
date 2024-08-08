@@ -309,8 +309,8 @@ Additional Notes
 
       docker exec -it spark-iceberg notebook
 
-  The notebook server will be available at `http://localhost:8888`.
+  The notebook server will be available at `http://localhost:8888 <http://localhost:8888>`_.
 
 - **Docker Image Information**
 
-  For more details on the Docker image used, visit the [Tabulario Spark-Iceberg Docker Hub page](https://hub.docker.com/r/tabulario/spark-iceberg).
+  For more details on the Docker image used, visit the `Tabulario Spark-Iceberg Docker Hub page <https://hub.docker.com/r/tabulario/spark-iceberg>`_.
