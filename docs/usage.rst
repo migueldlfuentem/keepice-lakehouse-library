@@ -134,10 +134,10 @@ Here's a step-by-step guide on how to use the `keepice_lakehouse_library` to cre
    .. code-block:: python
 
        # List databases
-       print(spark_manager.list_databases().show())
+       spark_manager.list_databases().show()
 
        # List tables in a database
-       print(spark_manager.list_tables(database_name='test').show())
+       spark_manager.list_tables(database_name='test').show()
 
    **Summary**:
     - List all databases managed by the Spark manager.
@@ -150,7 +150,6 @@ Here's a step-by-step guide on how to use the `keepice_lakehouse_library` to cre
        # Get table DDL
        df = spark_manager.get_table_ddl(database_name='test', table_name='taxi_test_table')
        ddl = df.select('createtab_stmt').rdd.flatMap(lambda x: x).collect()[0]
-       print(ddl)
 
    **Summary**:
     - Retrieve and print the Data Definition Language (DDL) statement for the `taxi_test_table` in the `test` database.
