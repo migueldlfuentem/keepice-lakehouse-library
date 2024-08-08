@@ -43,138 +43,162 @@ Here is an example of a `connectors_config.yaml` file:
         workgroup: "primary"
         catalog_name: "my_catalog"
 
-Example of use
+Example of Use
 =============================
 
-Here's a step-by-step guide on how to use the keepice-lakehouse library to create and manage Iceberg tables.
+Here's a step-by-step guide on how to use the `keepice_lakehouse_library` to create and manage Iceberg tables.
 
+1. **Import Library and Create Factory Instance**
 
-.. code-block:: python
+   .. code-block:: python
 
-    import keepice_lakehouse_library
+       import keepice_lakehouse_library
 
-    # Create an instance of IcebergManagerFactory
-    factory = IcebergManagerFactory()
+       # Create an instance of IcebergManagerFactory
+       factory = IcebergManagerFactory()
 
-    # Get a Spark Iceberg manager
-    spark_manager = factory.get_manager('spark_iceberg')
-    athena_manager = factory.get_manager('athena')
+   **Summary**:
+    - Import the `keepice_lakehouse_library`.
+    - Create an instance of `IcebergManagerFactory` to manage different types of Iceberg managers.
 
-    # Create a database
-    spark_manager.create_database(database_name='test')
+2. **Get Spark and Athena Managers**
 
-    # Define schema for the table
-    schema_dict = {
-        "VendorID": "bigint",
-        "tpep_pickup_datetime": "timestamp",
-        "tpep_dropoff_datetime": "timestamp",
-        "passenger_count": "double",
-        "trip_distance": "double",
-        "RatecodeID": "double",
-        "store_and_fwd_flag": "string",
-        "PULocationID": "bigint",
-        "DOLocationID": "bigint",
-        "payment_type": "bigint",
-        "fare_amount": "double",
-        "extra": "double",
-        "mta_tax": "double",
-        "tip_amount": "double",
-        "tolls_amount": "double",
-        "improvement_surcharge": "double",
-        "total_amount": "double",
-        "congestion_surcharge": "double",
-        "airport_fee": "double"
-    }
+   .. code-block:: python
 
-    # Create a table
-    spark_manager.create_table(
-        database_name='test',
-        table_name='taxi_test_table',
-        columns=schema_dict,
-        s3_folder_location="s3://warehouse/test/taxi-test-table",
-        partition_column="days(tpep_pickup_datetime)"
-    )
+       # Get a Spark Iceberg manager
+       spark_manager = factory.get_manager('spark_iceberg')
+       athena_manager = factory.get_manager('athena')
 
-    # List databases
-    print(spark_manager.list_databases().show())
+   **Summary**:
+    - Use the factory to get an instance of the Spark Iceberg manager (`spark_manager`).
+    - Obtain an instance of the Athena manager (`athena_manager`).
 
-    # List tables in a database
-    print(spark_manager.list_tables(database_name='test').show())
+3. **Create Database**
 
-    # Get table DDL
-    df = spark_manager.get_table_ddl(database_name='test', table_name='taxi_test_table')
-    ddl = df.select('createtab_stmt').rdd.flatMap(lambda x: x).collect()[0]
-    print(ddl)
+   .. code-block:: python
 
-    # Insert incremental data into a table
-    for filename in [
-        "yellow_tripdata_2022-04.parquet",
-        "yellow_tripdata_2022-03.parquet",
-        "yellow_tripdata_2022-02.parquet",
-        "yellow_tripdata_2022-01.parquet",
-        "yellow_tripdata_2021-12.parquet",
-    ]:
-        df = spark.read.parquet(f"/home/iceberg/data/{filename}")
-        df.createOrReplaceTempView("temporal_table")
-        spark_manager.insert_incremental_table_data(
-            source_table="temporal_table",
-            database_name="test",
-            table_name="taxi_test_table"
-        )
+       # Create a database
+       spark_manager.create_database(database_name='test')
 
-    # Insert bulk data into a table
-    for filename in [
-        "yellow_tripdata_2021-04.parquet",
-        "yellow_tripdata_2021-07.parquet"
-    ]:
-        df = spark.read.parquet(f"/home/iceberg/data/{filename}")
-        df.createOrReplaceTempView("temporal_table")
-        spark_manager.insert_bulk_table_data(
-            source_table="temporal_table",
-            database_name="test",
-            table_name="taxi_test_table"
-        )
+   **Summary**:
+    - Create a new database named `test` using the Spark Iceberg manager.
 
+4. **Define Table Schema**
 
-Summary of Code Functionality
-=============================
+   .. code-block:: python
 
-The provided code utilizes the ``keepice_lakehouse_library`` to manage Iceberg tables using a Spark backend. Here’s a detailed breakdown of what the code does:
+       # Define schema for the table
+       schema_dict = {
+           "VendorID": "bigint",
+           "tpep_pickup_datetime": "timestamp",
+           "tpep_dropoff_datetime": "timestamp",
+           "passenger_count": "double",
+           "trip_distance": "double",
+           "RatecodeID": "double",
+           "store_and_fwd_flag": "string",
+           "PULocationID": "bigint",
+           "DOLocationID": "bigint",
+           "payment_type": "bigint",
+           "fare_amount": "double",
+           "extra": "double",
+           "mta_tax": "double",
+           "tip_amount": "double",
+           "tolls_amount": "double",
+           "improvement_surcharge": "double",
+           "total_amount": "double",
+           "congestion_surcharge": "double",
+           "airport_fee": "double"
+       }
 
-1. **Import Library and Create Factory Instance**:
-   - The code starts by importing the ``keepice_lakehouse_library``.
-   - It then creates an instance of ``IcebergManagerFactory`` to manage different types of Iceberg managers.
+   **Summary**:
+    - Define a schema for the table using a dictionary (`schema_dict`). This schema includes columns and their data types.
 
-2. **Get Spark and Athena Managers**:
-   - The factory is used to create a Spark Iceberg manager (``spark_manager``) and an Athena manager (``athena_manager``).
+5. **Create Table**
 
-3. **Create Database**:
-   - A new database named ``test`` is created using the Spark Iceberg manager.
+   .. code-block:: python
 
-4. **Define Table Schema**:
-   - A schema for a table is defined in a dictionary (``schema_dict``). This schema includes columns like ``VendorID``, ``tpep_pickup_datetime``, ``passenger_count``, etc., with their corresponding data types.
+       # Create a table
+       spark_manager.create_table(
+           database_name='test',
+           table_name='taxi_test_table',
+           columns=schema_dict,
+           s3_folder_location="s3://warehouse/test/taxi-test-table",
+           partition_column="days(tpep_pickup_datetime)"
+       )
 
-5. **Create Table**:
-   - A table named ``taxi_test_table`` is created in the ``test`` database using the previously defined schema. The table is stored at the specified S3 location and partitioned by the ``tpep_pickup_datetime`` column.
+   **Summary**:
+    - Create a table named `taxi_test_table` in the `test` database with the schema defined earlier. Specify the S3 location and partitioning column.
 
-6. **List Databases and Tables**:
-   - The code lists all databases managed by the Spark manager.
-   - It also lists all tables within the ``test`` database.
+6. **List Databases and Tables**
 
-7. **Get Table DDL**:
-   - The Data Definition Language (DDL) statement for the ``taxi_test_table`` in the ``test`` database is retrieved and printed. This DDL includes the SQL statement used to create the table.
+   .. code-block:: python
 
-8. **Insert Incremental Data**:
-   - The code reads multiple Parquet files (representing yellow taxi trip data) into Spark DataFrames.
-   - For each DataFrame, a temporary table named ``temporal_table`` is created.
-   - Incremental data from these temporary tables is inserted into the ``taxi_test_table`` in the ``test`` database.
+       # List databases
+       print(spark_manager.list_databases().show())
 
-9. **Insert Bulk Data**:
-   - Similarly, the code reads additional Parquet files into Spark DataFrames.
-   - Temporary tables are created for these DataFrames.
-   - Bulk data from these temporary tables is inserted into the ``taxi_test_table`` in the ``test`` database.
+       # List tables in a database
+       print(spark_manager.list_tables(database_name='test').show())
 
-Overall, this code demonstrates how to use the ``keepice_lakehouse_library`` to create and manage Iceberg tables with Spark, including creating databases and tables, defining schemas, listing databases and tables, retrieving table DDL, and inserting both incremental and bulk data into tables.
+   **Summary**:
+    - List all databases managed by the Spark manager.
+    - List all tables within the `test` database.
+
+7. **Get Table DDL**
+
+   .. code-block:: python
+
+       # Get table DDL
+       df = spark_manager.get_table_ddl(database_name='test', table_name='taxi_test_table')
+       ddl = df.select('createtab_stmt').rdd.flatMap(lambda x: x).collect()[0]
+       print(ddl)
+
+   **Summary**:
+    - Retrieve and print the Data Definition Language (DDL) statement for the `taxi_test_table` in the `test` database.
+
+8. **Insert Incremental Data**
+
+   .. code-block:: python
+
+       # Insert incremental data into a table
+       for filename in [
+           "yellow_tripdata_2022-04.parquet",
+           "yellow_tripdata_2022-03.parquet",
+           "yellow_tripdata_2022-02.parquet",
+           "yellow_tripdata_2022-01.parquet",
+           "yellow_tripdata_2021-12.parquet",
+       ]:
+           df = spark.read.parquet(f"/home/iceberg/data/{filename}")
+           df.createOrReplaceTempView("temporal_table")
+           spark_manager.insert_incremental_table_data(
+               source_table="temporal_table",
+               database_name="test",
+               table_name="taxi_test_table"
+           )
+
+   **Summary**:
+    - Read multiple Parquet files into Spark DataFrames.
+    - Insert incremental data from these DataFrames into the `taxi_test_table` in the `test` database.
+
+9. **Insert Bulk Data**
+
+   .. code-block:: python
+
+       # Insert bulk data into a table
+       for filename in [
+           "yellow_tripdata_2021-04.parquet",
+           "yellow_tripdata_2021-07.parquet"
+       ]:
+           df = spark.read.parquet(f"/home/iceberg/data/{filename}")
+           df.createOrReplaceTempView("temporal_table")
+           spark_manager.insert_bulk_table_data(
+               source_table="temporal_table",
+               database_name="test",
+               table_name="taxi_test_table"
+           )
+
+   **Summary**:
+    - Read additional Parquet files into Spark DataFrames.
+    - Insert bulk data from these DataFrames into the `taxi_test_table` in the `test` database.
 
 Testing `keepice_lakehouse` Locally with Spark
 ==========================================================
