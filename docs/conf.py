@@ -1,7 +1,7 @@
-import os
 import sys
+from pathlib import Path
 
-sys.path.insert(0, os.path.abspath("../src"))
+sys.path.insert(0, str(Path("../src").resolve()))
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
