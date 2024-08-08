@@ -13,8 +13,8 @@ Overview
       - |github-actions| |codecov|
     * - package
       - |version| |wheel| |supported-versions| |supported-implementations| |commits-since|
-.. |docs| image:: https://readthedocs.org/projects/keepice-lakehouse-library/badge/?style=flat
-    :target: https://readthedocs.org/projects/keepice-lakehouse-library/
+.. |docs| image:: https://img.shields.io/badge/docs-GitHub%20Pages-blue
+    :target: https://migueldlfuentem.github.io/keepice-lakehouse-library/
     :alt: Documentation Status
 
 .. |github-actions| image:: https://github.com/migueldlfuentem/keepice-lakehouse-library/actions/workflows/github-actions.yml/badge.svg
@@ -69,7 +69,7 @@ Documentation
 =============
 
 
-https://keepice-lakehouse-library.readthedocs.io/
+https://migueldlfuentem.github.io/keepice-lakehouse-library/
 
 
 Development

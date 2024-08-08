@@ -20,6 +20,7 @@ __pycache__
 .env
 .installed.cfg
 .ve
+.venv
 bin
 build
 develop-eggs
