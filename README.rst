@@ -69,7 +69,7 @@ Documentation
 =============
 
 
-https://keepice-lakehouse-library.readthedocs.io/
+https://migueldlfuentem.github.io/keepice-lakehouse-library/
 
 
 Development
